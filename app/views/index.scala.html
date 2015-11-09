@@ -7,53 +7,48 @@
 
 <body>
 <h1 class="text-center">JSON Schema Validator</h1>
-<div class="row">
-    @helper.form(action = routes.Application.validate()) {
-    <div class="col-lg-6 text-center">
-        @helper.textarea(
-        validationRequestForm("schema"),
-        '_label -> "JSON Schema",
-        'rows -> 20,
-        'cols -> 60
-        )
-    </div>
-    <div class="col-lg-6 text-center">
-        @helper.textarea(
-        validationRequestForm("instance"),
-        '_label -> "JSON",
-        'rows -> 20,
-        'cols -> 60
-        )
-    </div>
-    <div class="form-actions text-center">
-        <button class="btn btn-default" type="submit">Validate</button>
-    </div>
-    }
-</div>
-<div class="row">
-    <div class="col-lg-8 col-lg-offset-2">
-        @if(validationRequestForm.hasGlobalErrors) {
-        @for(error <- validationRequestForm.globalErrors) {
-        <pre class="alert alert-danger">@error.message</pre>
-        }
-        } else { @if(validationRequestForm.data.nonEmpty) {
-        <div class="alert alert-success">
-            <a class="close" data-dismiss="alert">×</a>
-            <strong>Success!</strong> This is a valid instance.
+<div class="container-fluid">
+    <div class="row">
+        @helper.form(action = routes.Application.validate()) {
+        <div class="col-lg-6 text-center">
+            @helper.textarea(
+            validationRequestForm("schema"),
+            '_label -> "JSON Schema",
+            'rows -> 20,
+            'cols -> 60
+            )
         </div>
-        }}
+        <div class="col-lg-6 text-center">
+            @helper.textarea(
+            validationRequestForm("instance"),
+            '_label -> "JSON",
+            'rows -> 20,
+            'cols -> 60
+            )
+        </div>
+        <div class="form-actions text-center">
+            <button class="btn btn-default" type="submit">Validate</button>
+        </div>
+        }
     </div>
-</div>
-<div class="row">
-    <p class="col-lg-8 col-lg-offset-2">
-        This is a JSON schema validator implemented in Scala based on the <a href="https://github.com/jto/validation">Play Unified Validation Library</a>.
-        For issues and features requests, please fill a issue on <a hre="https://github.com/edgarmueller/play-json-schema-validator/issues">github</a>.<br>
-    </p>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            @if(validationRequestForm.hasGlobalErrors) {
+            @for(error <- validationRequestForm.globalErrors) {
+            <pre class="alert alert-danger">@error.message</pre>
+            }
+            } else { @if(validationRequestForm.data.nonEmpty) {
+            <div class="alert alert-success">
+                <a class="close" data-dismiss="alert">×</a>
+                <strong>Success!</strong> This is a valid instance.
+            </div>
+            }}
+            <p class="col-lg-12">
+                This is a JSON schema validator implemented in Scala based on the <a href="https://github.com/jto/validation">Play Unified Validation Library</a>.
+                For issues and features requests, please file an issue on <a href="http://github.com/eclipsesource/play-json-schema-validator/issues/new">github</a>.<br>
+            </p>
+        </div>
+    </div>
 </div>
 
-<div class="footer">
-    <p style="padding: 2em;" class="pull-right">
-        EclipseSource 2015
-    </p>
-</div>
 </body>

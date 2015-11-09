@@ -1,3 +1,4 @@
-body {
-    /*background-image: url('../images/small_steps.png');*/
+body .container {
+    max-width: 1200px;
+    margin:0px auto;
 }

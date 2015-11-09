@@ -20,7 +20,9 @@ object Application extends Controller {
     )(ValidationRequest.apply)(ValidationRequest.unapply)
   )
 
-  def index = Action { Ok(views.html.index(validationRequestForms)) }
+  def index = Action {
+    Ok(views.html.index(validationRequestForms))
+  }
 
   def validate = Action { implicit request =>
     validationRequestForms.bindFromRequest.fold(
