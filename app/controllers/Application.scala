@@ -9,7 +9,7 @@ import com.eclipsesource.schema._
 import play.api.Play.current
 import play.api.i18n.Messages.Implicits._
 
-import scala.util.Try
+import scala.util.{Try, Success => TrySuccess, Failure => TryFailure}
 
 object Application extends Controller {
 
@@ -29,27 +29,30 @@ object Application extends Controller {
       // errors occurred
       formWithErrors => BadRequest(views.html.index(formWithErrors)),
       // valid form
-      validationRequest =>
+      validationRequest => {
         Try {
           (Json.parse(validationRequest.schema), Json.parse(validationRequest.instance))
-        }.map { case (schema, instance) =>
-          schema.validate[SchemaType] match {
-            case JsSuccess(validSchema, _) =>
-              SchemaValidator.validate(validSchema)(instance) match {
-                case Success(validInstance) => Ok(views.html.index(validationRequestForms.fill(validationRequest)))
-                case Failure(errors) => okWithErrors(validationRequest, errors.toJson)
-              }
-            case JsError(invalidSchema) => okWithErrors(validationRequest, Json.arr("Invalid JSON schema"))
-          }
-        }.recover { case throwable => okWithErrors(validationRequest, Json.arr(throwable.getMessage)) }
-         .get
+        } match {
+          case TrySuccess((schema, instance)) =>
+            schema.validate[SchemaType] match {
+              case JsSuccess(validSchema, _) =>
+                SchemaValidator.validate(validSchema)(instance) match {
+                  case Success(validInstance) => Ok(views.html.index(validationRequestForms.fill(validationRequest)))
+                  case Failure(errors) =>
+                    okWithErrors(validationRequest, errors.toJson)
+                }
+              case JsError(invalidSchema) => okWithErrors(validationRequest, Json.arr("Invalid JSON schema"))
+            }
+          case TryFailure(throwable) => okWithErrors(validationRequest, Json.arr(throwable.getMessage))
+        }
+      }
     )
   }
 
-  private def okWithErrors(validationRequest: ValidationRequest, errors: JsArray): Result =
+  private def okWithErrors(validationRequest: ValidationRequest, errors: JsValue): Result =
     Ok(views.html.index(fillFormAndDisplayErrors(validationRequest, errors)))
 
-  private def fillFormAndDisplayErrors(data: ValidationRequest, errors: JsArray): Form[ValidationRequest] = {
+  private def fillFormAndDisplayErrors(data: ValidationRequest, errors: JsValue): Form[ValidationRequest] = {
     val form = validationRequestForms.fill(
       ValidationRequest(data.schema, data.instance)
     )

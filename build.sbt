@@ -8,7 +8,9 @@ scalaVersion := "2.11.1"
 
 resolvers += "EclipseSource Repository" at "https://dl.bintray.com/emueller/maven/"
 
-libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.6.0"
+//resolvers += "EclipseSource Repository" at "http://localhost:8080"
+
+libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.6.1"
 
 libraryDependencies ++= Seq(
   "org.webjars" %% "webjars-play" % "2.4.0",
