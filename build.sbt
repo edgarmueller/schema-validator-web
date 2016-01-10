@@ -17,6 +17,7 @@ libraryDependencies ++= Seq(
   "org.webjars" % "jquery" % "1.11.1",
   "org.webjars" % "bootstrap" % "3.2.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angularjs" % "1.3.14" exclude("org.webjars", "jquery"),
+  "org.webjars" % "angular-ui-ace" % "0.2.3",
   // ---
   "io.github.jto" %% "validation-core" % "1.1",
   "io.github.jto" %% "validation-json" % "1.1"

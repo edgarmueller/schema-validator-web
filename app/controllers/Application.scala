@@ -21,15 +21,18 @@ object Application extends Controller {
   )
 
   def index = Action {
-    Ok(views.html.index(validationRequestForms))
+    Ok(views.html.index(validationRequestForms.fill(ValidationRequest("{}", "{}"))))
   }
 
   def validate = Action { implicit request =>
+    println("LOL")
     validationRequestForms.bindFromRequest.fold(
       // errors occurred
-      formWithErrors => BadRequest(views.html.index(formWithErrors)),
+      formWithErrors =>{ println(formWithErrors); BadRequest(views.html.index(formWithErrors)) },
       // valid form
       validationRequest => {
+        println(s"schema is ${validationRequest.schema}")
+        println(s"instance is ${validationRequest.instance}")
         Try {
           (Json.parse(validationRequest.schema), Json.parse(validationRequest.instance))
         } match {
@@ -48,6 +51,8 @@ object Application extends Controller {
       }
     )
   }
+
+
 
   private def okWithErrors(validationRequest: ValidationRequest, errors: JsValue): Result =
     Ok(views.html.index(fillFormAndDisplayErrors(validationRequest, errors)))

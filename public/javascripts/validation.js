@@ -1,22 +1,23 @@
-function MyCtrl($scope, $parse) {
-    var validate = function() {
-        $http.get("")
+angular.module('JSONSchemaValidationApp', ['ui.ace'])
+  .controller('MyController', ['$http', function($http) {
+
+  var vm = this;
+  vm.foo = "qq";
+  vm.schema = JSON.stringify({
+    properties: {
+      foo: { type: "string" }
     }
-    $scope.submit = function(){
-        var serverResponse = pretendThisIsOnTheServerAndCalledViaAjax();
-
-        for (var fieldName in serverResponse) {
-            var message = serverResponse[fieldName];
-            var serverMessage = $parse('myForm.'+fieldName+'.$error.serverMessage');
-
-            if (message == 'VALID') {
-                $scope.myForm.$setValidity(fieldName, true, $scope.myForm);
-                serverMessage.assign($scope, undefined);
-            }
-            else {
-                $scope.myForm.$setValidity(fieldName, false, $scope.myForm);
-                serverMessage.assign($scope, serverResponse[fieldName]);
-            }
-        }
-    };
-}
+  });
+  vm.instance = "{}";
+  vm.submit = function() {
+    $http({
+      method: 'POST',
+      url: '/validate',
+      data: $.param({schema: this.schema, instance: this.instance}),
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }).then(
+      function(result) { console.log('success ' + JSON.stringify(result)); }, function() { console.log('error'); }
+    );
+    console.log("LOLBERT");
+  }
+}]);
