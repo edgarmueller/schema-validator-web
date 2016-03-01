@@ -1,22 +1,25 @@
-function MyCtrl($scope, $parse) {
-    var validate = function() {
-        $http.get("")
-    }
-    $scope.submit = function(){
-        var serverResponse = pretendThisIsOnTheServerAndCalledViaAjax();
-
-        for (var fieldName in serverResponse) {
-            var message = serverResponse[fieldName];
-            var serverMessage = $parse('myForm.'+fieldName+'.$error.serverMessage');
-
-            if (message == 'VALID') {
-                $scope.myForm.$setValidity(fieldName, true, $scope.myForm);
-                serverMessage.assign($scope, undefined);
-            }
-            else {
-                $scope.myForm.$setValidity(fieldName, false, $scope.myForm);
-                serverMessage.assign($scope, serverResponse[fieldName]);
-            }
+angular.module('JSONSchemaValidationApp', ['ui.ace'])
+  .controller('SubmitValidationController', ['$http', function($http) {
+  var vm = this;
+  vm.schema = "{}";
+  vm.instance = "{}";
+  vm.isValid = false;
+  vm.isInvalid = false;
+  vm.submit = function() {
+    $http({
+      method: 'POST',
+      url: '/validate',
+      data: $.param({schema: vm.schema, instance: vm.instance}),
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }).then(
+        function(result) {
+          vm.isValid = Object.keys(result.data).length == 0;
+          vm.isInvalid = !vm.isValid;
+          vm.errors = JSON.stringify(result.data, null, 4);
+        },
+        function(error) {
+          vm.errors = error;
         }
-    };
-}
+    );
+  }
+}]);
