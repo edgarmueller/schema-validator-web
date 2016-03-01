@@ -1,6 +1,18 @@
-body .container {
-    max-width: 1200px;
-    margin:0px auto;
+.ace_editor { height: 400px; }
+
+.title {
+  font-weight: bold;
+  color: #F9A06B;
 }
 
-.ace_editor { height: 200px; }
+body {
+  background-color: #EFEFA4;
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* set a max-width for horizontal fluid layout and make it centered */
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1200px;
+}

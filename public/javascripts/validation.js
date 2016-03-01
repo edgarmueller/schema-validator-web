@@ -1,23 +1,25 @@
 angular.module('JSONSchemaValidationApp', ['ui.ace'])
-  .controller('MyController', ['$http', function($http) {
-
+  .controller('SubmitValidationController', ['$http', function($http) {
   var vm = this;
-  vm.foo = "qq";
-  vm.schema = JSON.stringify({
-    properties: {
-      foo: { type: "string" }
-    }
-  });
+  vm.schema = "{}";
   vm.instance = "{}";
+  vm.isValid = false;
+  vm.isInvalid = false;
   vm.submit = function() {
     $http({
       method: 'POST',
       url: '/validate',
-      data: $.param({schema: this.schema, instance: this.instance}),
+      data: $.param({schema: vm.schema, instance: vm.instance}),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(
-      function(result) { console.log('success ' + JSON.stringify(result)); }, function() { console.log('error'); }
+        function(result) {
+          vm.isValid = Object.keys(result.data).length == 0;
+          vm.isInvalid = !vm.isValid;
+          vm.errors = JSON.stringify(result.data, null, 4);
+        },
+        function(error) {
+          vm.errors = error;
+        }
     );
-    console.log("LOLBERT");
   }
 }]);

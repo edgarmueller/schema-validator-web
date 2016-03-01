@@ -25,14 +25,11 @@ object Application extends Controller {
   }
 
   def validate = Action { implicit request =>
-    println("LOL")
     validationRequestForms.bindFromRequest.fold(
       // errors occurred
       formWithErrors =>{ println(formWithErrors); BadRequest(views.html.index(formWithErrors)) },
       // valid form
       validationRequest => {
-        println(s"schema is ${validationRequest.schema}")
-        println(s"instance is ${validationRequest.instance}")
         Try {
           (Json.parse(validationRequest.schema), Json.parse(validationRequest.instance))
         } match {
@@ -40,9 +37,9 @@ object Application extends Controller {
             schema.validate[SchemaType] match {
               case JsSuccess(validSchema, _) =>
                 SchemaValidator.validate(validSchema)(instance) match {
-                  case Success(validInstance) => Ok(views.html.index(validationRequestForms.fill(validationRequest)))
+                  case Success(validInstance) => Ok(validInstance)
                   case Failure(errors) =>
-                    okWithErrors(validationRequest, errors.toJson)
+                    Ok(errors.toJson)
                 }
               case JsError(invalidSchema) => okWithErrors(validationRequest, Json.arr("Invalid JSON schema"))
             }

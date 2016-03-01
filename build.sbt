@@ -4,13 +4,13 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.10.6"
 
-resolvers += "EclipseSource Repository" at "https://dl.bintray.com/emueller/maven/"
+//resolvers += "EclipseSource Repository" at "https://dl.bintray.com/emueller/maven/"
 
-//resolvers += "EclipseSource Repository" at "http://localhost:8080"
+resolvers += "EclipseSource Repository" at "http://localhost:8080"
 
-libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.6.1"
+libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.6.1-SNAPSHOT"
 
 libraryDependencies ++= Seq(
   "org.webjars" %% "webjars-play" % "2.4.0",

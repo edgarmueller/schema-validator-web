@@ -1,6 +1,7 @@
 @(validationRequestForm: Form[ValidationRequest])(implicit messages: Messages)
 
 <link rel='stylesheet'        href='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))'>
+<link href='https://fonts.googleapis.com/css?family=Work+Sans' rel='stylesheet' type='text/css'>
 <link rel='stylesheet'        href='@routes.Assets.at("stylesheets/main.css")'/>
 <script type="text/javascript" src='@routes.WebJarAssets.at(WebJarAssets.locate("src-min-noconflict/ace.js"))'></script>
 <script type="text/javascript" src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.js"))'></script>
@@ -9,31 +10,46 @@
 <script type="text/javascript" src='@routes.Assets.at("javascripts/validation.js")'></script>
 
 <body ng-app="JSONSchemaValidationApp">
-<h1 class="text-center">JSON Schema Validator</h1>
-<div class="container-fluid" ng-controller="MyController as vm">
-    {{vm.foo}}
+<h1 class="text-center title">JSON Schema Validator</h1>
+<div class="container-fluid" ng-controller="SubmitValidationController as vm">
     <div class="row">
-        <form ng-submit="vm.submit()">
+        <div class="col-md-6">
+            <h3 class="text-center">JSON Schema</h3>
+            <div ui-ace="{
+                 useWrapMode: true,
+                 showGutter: true,
+                 theme:'twilight',
+                 mode: 'json'
+                 }"
+                 ng-model="vm.schema"></div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-center">JSON Instance</h3>
+            <div ui-ace="{
+                 useWrapMode: true,
+                 showGutter: true,
+                 theme:'twilight',
+                 mode: 'json'
+                 }"
+                 ng-model="vm.instance"></div>
+        </div>
+    </div>
+    <div class="row">
+        <form class="col-md-12 text-center" ng-submit="vm.submit()">
             Enter text and hit enter:
-            <input type="text" ng-model="vm.schema" name="schema" />
-            <input type="text" ng-model="vm.instance" name="instance" />
             <input type="submit" id="submit" value="Submit" />
         </form>
     </div>
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
-            @if(validationRequestForm.hasGlobalErrors) {
-              @for(error <- validationRequestForm.globalErrors) {
-                <pre class="alert alert-danger">@error.message</pre>
-              }
-            } else {
-              @if(validationRequestForm.data.nonEmpty) {
-                <div class="alert alert-success">
-                  <a class="close" data-dismiss="alert">×</a>
-                  <strong>Success!</strong> This is a valid instance.
-                </div>
-              }
-            }
+            <div ng-if="vm.isInvalid">
+                <pre class="alert alert-danger">{{vm.errors}}</pre>
+            </div>
+            <div ng-if="vm.isValid" class="alert alert-success">
+                <a class="close" data-dismiss="alert">×</a>
+                <strong>Success!</strong> This is a valid instance.
+            </div>
+
             <p class="col-lg-12">
                 This is a JSON schema validator implemented in Scala based on the <a href="https://github.com/jto/validation">Play Unified Validation Library</a>.
                 For issues and features requests, please file an issue on <a href="http://github.com/eclipsesource/play-json-schema-validator/issues/new">github</a>.<br>
