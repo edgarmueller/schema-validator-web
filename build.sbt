@@ -4,14 +4,14 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.10.6"
+scalaVersion := "2.11.6"
 
-//resolvers += "EclipseSource Repository" at "https://dl.bintray.com/emueller/maven/"
+resolvers += "EclipseSource Repository" at "https://dl.bintray.com/emueller/maven/"
 
-libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.6.2"
+// resolvers += "EclipseSource Repository" at "http://localhost:8080"
 
-libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.6.1"
-libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.6.1-SNAPSHOT"
+libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.6.4"
+
 libraryDependencies ++= Seq(
   "org.webjars" %% "webjars-play" % "2.4.0",
   "org.webjars" % "jquery" % "1.11.1",
@@ -22,4 +22,5 @@ libraryDependencies ++= Seq(
   "io.github.jto" %% "validation-core" % "1.1",
   "io.github.jto" %% "validation-json" % "1.1"
 )
+
 

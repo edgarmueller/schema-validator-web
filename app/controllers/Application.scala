@@ -41,15 +41,13 @@ object Application extends Controller {
                   case Failure(errors) =>
                     Ok(errors.toJson)
                 }
-              case JsError(invalidSchema) => okWithErrors(validationRequest, Json.arr("Invalid JSON schema"))
+              case JsError(invalidSchema) =>  Ok(Json.arr("Invalid JSON schema"))
             }
-          case TryFailure(throwable) => okWithErrors(validationRequest, Json.arr(throwable.getMessage))
+          case TryFailure(throwable) => Ok(Json.arr(throwable.getMessage))
         }
       }
     )
   }
-
-
 
   private def okWithErrors(validationRequest: ValidationRequest, errors: JsValue): Result =
     Ok(views.html.index(fillFormAndDisplayErrors(validationRequest, errors)))

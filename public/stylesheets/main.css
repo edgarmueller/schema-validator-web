@@ -2,12 +2,23 @@
 
 .title {
   font-weight: bold;
-  color: #F9A06B;
+  color: black;
 }
 
 body {
-  background-color: #EFEFA4;
   font-family: 'Work Sans', sans-serif;
+}
+
+.default {
+  background-image: url('../images/congruent_pentagon_grey.png');
+}
+
+.invalid {
+  background-image: url('../images/congruent_pentagon_red.png');
+}
+
+.valid {
+  background-image: url('../images/congruent_pentagon_green.png');
 }
 
 /* set a max-width for horizontal fluid layout and make it centered */

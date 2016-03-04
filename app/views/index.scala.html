@@ -9,9 +9,13 @@
 <script type="text/javascript" src='@routes.WebJarAssets.at(WebJarAssets.locate("ui-ace.min.js"))'></script>
 <script type="text/javascript" src='@routes.Assets.at("javascripts/validation.js")'></script>
 
-<body ng-app="JSONSchemaValidationApp">
+<!-- TODO: pre-filled example -->
+
+<body ng-app="JSONSchemaValidationApp"
+      ng-controller="SubmitValidationController as vm"
+      ng-class="{true: 'valid', false: {true: 'invalid', false: 'default'}[vm.isInvalid]}[vm.isValid]">
 <h1 class="text-center title">JSON Schema Validator</h1>
-<div class="container-fluid" ng-controller="SubmitValidationController as vm">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-6">
             <h3 class="text-center">JSON Schema</h3>
@@ -19,7 +23,8 @@
                  useWrapMode: true,
                  showGutter: true,
                  theme:'twilight',
-                 mode: 'json'
+                 mode: 'json',
+                 onChange: vm.resetValidationState,
                  }"
                  ng-model="vm.schema"></div>
         </div>
@@ -29,15 +34,16 @@
                  useWrapMode: true,
                  showGutter: true,
                  theme:'twilight',
-                 mode: 'json'
+                 mode: 'json',
+                 onChange: vm.resetValidationState,
                  }"
                  ng-model="vm.instance"></div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="margin-top: 1em">
         <form class="col-md-12 text-center" ng-submit="vm.submit()">
-            Enter text and hit enter:
-            <input type="submit" id="submit" value="Submit" />
+            Enter schema and instance and click 'Validate':<br>
+            <input class="btn btn-primary" type="submit" id="submit" value="Validate" />
         </form>
     </div>
     <div class="row">
@@ -46,7 +52,6 @@
                 <pre class="alert alert-danger">{{vm.errors}}</pre>
             </div>
             <div ng-if="vm.isValid" class="alert alert-success">
-                <a class="close" data-dismiss="alert">×</a>
                 <strong>Success!</strong> This is a valid instance.
             </div>
 
