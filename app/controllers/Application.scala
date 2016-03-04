@@ -48,14 +48,4 @@ object Application extends Controller {
       }
     )
   }
-
-  private def okWithErrors(validationRequest: ValidationRequest, errors: JsValue): Result =
-    Ok(views.html.index(fillFormAndDisplayErrors(validationRequest, errors)))
-
-  private def fillFormAndDisplayErrors(data: ValidationRequest, errors: JsValue): Form[ValidationRequest] = {
-    val form = validationRequestForms.fill(
-      ValidationRequest(data.schema, data.instance)
-    )
-    form.withGlobalError(Json.prettyPrint(errors))
-  }
 }
