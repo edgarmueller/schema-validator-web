@@ -2,14 +2,13 @@ package controllers
 
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.mapping.{Failure, Success}
 import play.api.libs.json._
 import play.api.mvc._
 import com.eclipsesource.schema._
 import play.api.Play.current
+import play.api.data.mapping.{Failure, Success}
 import play.api.i18n.Messages.Implicits._
-
-import scala.util.{Try, Success => TrySuccess, Failure => TryFailure}
+import scala.util.{Try, Failure => TryFailure, Success => TrySuccess}
 
 object Application extends Controller {
 
@@ -37,7 +36,8 @@ object Application extends Controller {
             schema.validate[SchemaType] match {
               case JsSuccess(validSchema, _) =>
                 SchemaValidator.validate(validSchema)(instance) match {
-                  case Success(validInstance) => Ok(validInstance)
+                  case Success(validInstance) =>
+                    Ok(validInstance)
                   case Failure(errors) =>
                     Ok(errors.toJson)
                 }

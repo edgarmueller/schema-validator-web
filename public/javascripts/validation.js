@@ -1,5 +1,5 @@
 angular.module('JSONSchemaValidationApp', ['ui.ace'])
-  .controller('SubmitValidationController', ['$http', function($http) {
+  .controller('SubmitValidationController', ['$http', '$httpParamSerializer', function($http, $httpParamSerializer) {
   var vm = this;
   vm.schema = "{ \"minimum\": 1 }";
   vm.instance = "3";
@@ -9,7 +9,7 @@ angular.module('JSONSchemaValidationApp', ['ui.ace'])
     $http({
       method: 'POST',
       url: '/validate',
-      data: $.param({schema: vm.schema, instance: vm.instance}),
+      data: $httpParamSerializer({schema: vm.schema, instance: vm.instance}),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(
         function(result) {
