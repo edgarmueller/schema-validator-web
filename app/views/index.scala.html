@@ -1,12 +1,12 @@
 @(validationRequestForm: Form[ValidationRequest])(implicit messages: Messages)
 
-<link rel='stylesheet'        href='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))'>
+<link rel='stylesheet'        href='@routes.Assets.at("lib/bootstrap/css/bootstrap.min.css")'>
 <link href='https://fonts.googleapis.com/css?family=Work+Sans' rel='stylesheet' type='text/css'>
 <link rel='stylesheet'        href='@routes.Assets.at("stylesheets/main.css")'/>
-<script type="text/javascript" src='@routes.WebJarAssets.at(WebJarAssets.locate("src-min-noconflict/ace.js"))'></script>
-<script type="text/javascript" src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.js"))'></script>
-<script type="text/javascript" src='@routes.WebJarAssets.at(WebJarAssets.locate("angular.min.js"))'></script>
-<script type="text/javascript" src='@routes.WebJarAssets.at(WebJarAssets.locate("ui-ace.min.js"))'></script>
+<script type="text/javascript" src='@routes.Assets.at("lib/angularjs/angular.min.js")'></script>
+<script type="text/javascript" src='@routes.Assets.at("lib/ace/src-min-noconflict/ace.js")'></script>
+<script type="text/javascript" src='@routes.Assets.at("lib/jquery/jquery.min.js")'></script>
+<script type="text/javascript" src='@routes.Assets.at("lib/angular-ui-ace/ui-ace.min.js")'></script>
 <script type="text/javascript" src='@routes.Assets.at("javascripts/validation.js")'></script>
 
 <!-- TODO: pre-filled example -->
@@ -56,7 +56,7 @@
             </div>
 
             <p class="col-lg-12">
-                This is a JSON schema draft v4 validator implemented in Scala based on the <a href="https://github.com/jto/validation">Play Unified Validation Library</a>.
+                This is a JSON schema draft v4 validator implemented in Scala based on play-json.
                 For issues and features requests, please file an issue on <a href="http://github.com/eclipsesource/play-json-schema-validator/issues/new">github</a>.<br>
             </p>
         </div>

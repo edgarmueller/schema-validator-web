@@ -6,11 +6,10 @@ import play.api.libs.json._
 import play.api.mvc._
 import com.eclipsesource.schema._
 import play.api.Play.current
-import play.api.data.mapping.{Failure, Success}
 import play.api.i18n.Messages.Implicits._
-import scala.util.{Try, Failure => TryFailure, Success => TrySuccess}
+import scala.util.{Try, Failure, Success}
 
-object Application extends Controller {
+class Application extends Controller {
 
   val validationRequestForms = Form(
     mapping(
@@ -26,24 +25,24 @@ object Application extends Controller {
   def validate = Action { implicit request =>
     validationRequestForms.bindFromRequest.fold(
       // errors occurred
-      formWithErrors =>{ println(formWithErrors); BadRequest(views.html.index(formWithErrors)) },
+      formWithErrors =>{ BadRequest(views.html.index(formWithErrors)) },
       // valid form
       validationRequest => {
         Try {
           (Json.parse(validationRequest.schema), Json.parse(validationRequest.instance))
         } match {
-          case TrySuccess((schema, instance)) =>
+          case Success((schema, instance)) =>
             schema.validate[SchemaType] match {
               case JsSuccess(validSchema, _) =>
                 SchemaValidator.validate(validSchema)(instance) match {
-                  case Success(validInstance) =>
+                  case JsSuccess(validInstance, _) =>
                     Ok(validInstance)
-                  case Failure(errors) =>
+                  case JsError(errors) =>
                     Ok(errors.toJson)
                 }
               case JsError(invalidSchema) =>  Ok(Json.arr("Invalid JSON schema"))
             }
-          case TryFailure(throwable) => Ok(Json.arr(throwable.getMessage))
+          case Failure(throwable) => Ok(Json.arr(throwable.getMessage))
         }
       }
     )

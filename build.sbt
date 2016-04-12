@@ -10,17 +10,14 @@ resolvers += "EclipseSource Repository" at "https://dl.bintray.com/emueller/mave
 
 // resolvers += "EclipseSource Repository" at "http://localhost:8080"
 
-libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.6.5"
+libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.7.0"
 
 libraryDependencies ++= Seq(
-  "org.webjars" %% "webjars-play" % "2.4.0",
+  "org.webjars" %% "webjars-play" % "2.5.0",
   "org.webjars" % "jquery" % "1.11.1",
   "org.webjars" % "bootstrap" % "3.2.0" exclude("org.webjars", "jquery"),
   "org.webjars" % "angularjs" % "1.5.2" exclude("org.webjars", "jquery"),
-  "org.webjars" % "angular-ui-ace" % "0.2.3",
-  // ---
-  "io.github.jto" %% "validation-core" % "1.1",
-  "io.github.jto" %% "validation-json" % "1.1"
+  "org.webjars" % "angular-ui-ace" % "0.2.3"
 )
 
 
