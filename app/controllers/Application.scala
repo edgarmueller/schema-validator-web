@@ -11,6 +11,8 @@ import scala.util.{Try, Failure, Success}
 
 class Application extends Controller {
 
+  val validator = SchemaValidator()
+
   val validationRequestForms = Form(
     mapping(
       "schema" -> text,
@@ -34,7 +36,7 @@ class Application extends Controller {
           case Success((schema, instance)) =>
             schema.validate[SchemaType] match {
               case JsSuccess(validSchema, _) =>
-                SchemaValidator.validate(validSchema)(instance) match {
+                validator.validate(validSchema)(instance) match {
                   case JsSuccess(validInstance, _) =>
                     Ok(validInstance)
                   case JsError(errors) =>
