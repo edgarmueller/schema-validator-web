@@ -5,8 +5,6 @@ import play.api.data.Forms._
 import play.api.libs.json._
 import play.api.mvc._
 import com.eclipsesource.schema._
-import play.api.Play.current
-import play.api.i18n.Messages.Implicits._
 import scala.util.{Try, Failure, Success}
 
 class Application extends Controller {
