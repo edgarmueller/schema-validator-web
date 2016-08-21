@@ -10,7 +10,7 @@ resolvers += "EclipseSource Repository" at "https://dl.bintray.com/emueller/mave
 
 //resolvers += "EclipseSource Repository" at "http://localhost:8080"
 
-libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.8.2"
+libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.8.3"
 
 libraryDependencies ++= Seq(
   "org.webjars" %% "webjars-play" % "2.5.0",
