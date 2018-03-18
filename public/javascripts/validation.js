@@ -91,7 +91,6 @@ angular.module('JSONSchemaValidationApp', ['ui.ace'])
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(
         function(result) {
-          console.log(JSON.stringify(result));
           vm.isValid = vm.equalsInstance(result.data);
           vm.isInvalid = !vm.isValid;
           vm.errors = JSON.stringify(result.data, null, 4);
