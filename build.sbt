@@ -8,7 +8,7 @@ scalaVersion := "2.12.1"
 
 resolvers += "EclipseSource Repository" at "https://dl.bintray.com/emueller/maven/"
 
-libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.9.5-M1"
+libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.9.5-M2"
 
 libraryDependencies += guice
 

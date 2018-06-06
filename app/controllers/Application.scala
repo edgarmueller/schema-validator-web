@@ -6,6 +6,7 @@ import play.api.data.Forms._
 import play.api.libs.json._
 import play.api.mvc._
 import com.eclipsesource.schema._
+import com.eclipsesource.schema.drafts.Version4
 import play.api.i18n._
 
 import scala.io.Source
@@ -24,7 +25,7 @@ class Application  @Inject()(cc: ControllerComponents) extends AbstractControlle
   }
 
   def validate = Action { implicit request =>
-    val validator = SchemaValidator()
+    val validator = SchemaValidator(Some(Version4))
     validationRequestForms.bindFromRequest.fold(
       // errors occurred
       formWithErrors =>{ BadRequest(views.html.index(formWithErrors)) },
