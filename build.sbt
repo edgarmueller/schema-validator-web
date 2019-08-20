@@ -4,11 +4,11 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.8"
 
 resolvers += "EclipseSource Repository" at "https://dl.bintray.com/emueller/maven/"
 
-libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.9.5-M4"
+libraryDependencies += "com.eclipsesource"  %% "play-json-schema-validator" % "0.9.5"
 
 libraryDependencies += guice
 
